@@ -86,7 +86,7 @@ const Reducer = (state = State, { type, payload }) => {
 	}
 }
 ${casesDispatch}
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === "development" ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: ${className} }) || compose : null || compose;
 const middleware = composeEnhancers(applyMiddleware(Thunk));
 export default createStore(Reducer,State,middleware);
 `);
