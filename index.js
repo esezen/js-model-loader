@@ -56,8 +56,11 @@ function renameClass(content) {
 		return `${classDef.trim()}Definition`;
 	});
 }
-
+function stripComments(content){
+    return content.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/, "");
+}
 module.exports = function(content) {
+	content = stripComments(content)
 var
 	className = getClassName(content),
 	cases = getCases(content)
