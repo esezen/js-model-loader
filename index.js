@@ -58,28 +58,28 @@ function renameClass(content) {
 }
 
 module.exports = function(content) {
-	var
-		className = getClassName(content),
-		cases = getCases(content)
-	;
+var
+	className = getClassName(content),
+	cases = getCases(content)
+;
 
-	var
-		casesObj = casesToJson(cases, className),
-		casesCall = casesToReducer(cases, className),
-		casesDispatch = casesToDispatch(cases),
-		renamedClass = renameClass(content),
-		newClassName = `${className}Definition`
-	;
+var
+	casesObj = casesToJson(cases, className),
+	casesCall = casesToReducer(cases, className),
+	casesDispatch = casesToDispatch(cases),
+	renamedClass = renameClass(content),
+	newClassName = `${className}Definition`
+;
 
 return (`
-import React from 'react'
-import { createStore, applyMiddleware, compose } from 'redux'
-import Thunk from 'redux-thunk'
+import React from 'react';
+import { createStore, applyMiddleware, compose } from 'redux';
+import Thunk from 'redux-thunk';
 ${ renamedClass }
-export const CASES = ${casesObj}
-export const ${className} = new ${newClassName}()
-const State = typeof ${className}.state === 'object' ? ${className}.state : ${className}.state()
-const Reducer = (state = State, { type, payload }) => {
+export const CASES = ${casesObj};
+export const ${className} = new ${newClassName}();
+const State = typeof ${className}.state === 'object' ? ${className}.state : ${className}.state();
+function Reducer(state = State, { type, payload }) {
 	switch(type) {
 		${casesCall}
 		default: return state
